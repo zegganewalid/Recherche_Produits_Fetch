@@ -1,9 +1,7 @@
-// Sélection des éléments HTML
 const searchBar = document.getElementById('search-bar');
 const inStockCheckbox = document.getElementById('in-stock');
 const productList = document.getElementById('product-list');
 
-// Fonction pour récupérer les produits depuis le lien via un proxy CORS
 const fetchData = async () => {
     const url = 'https://gist.githubusercontent.com/dupontdenis/b2e5e1b7460c239b39deb76f8d458908/raw/817a898940170ae4ea6d5b16ef462f959c4d38d1/gistfile1.txt';
   
@@ -20,14 +18,12 @@ const fetchData = async () => {
     }
 };
 
-// Fonction pour obtenir les catégories uniques
 function getUniqueCategories(products) {
     const categories = new Set();
     products.forEach(product => categories.add(product.category));
     return Array.from(categories);
 }
 
-// Fonction pour afficher les produits par catégorie
 function displayProducts(filteredProducts) {
     productList.innerHTML = '';
 
@@ -39,7 +35,7 @@ function displayProducts(filteredProducts) {
         categoryCell.textContent = category;
         categoryCell.classList.add('category');
         categoryCell.setAttribute('colspan', 2);
-        categoryRow.appendChild(categoryCell);  // Correction ajoutée pour ajouter le cell au row
+        categoryRow.appendChild(categoryCell);  
         productList.appendChild(categoryRow);
 
         const categoryProducts = filteredProducts.filter(product => product.category === category);
@@ -63,7 +59,6 @@ function displayProducts(filteredProducts) {
     });
 }
 
-// Fonction pour filtrer les produits
 function filterProducts(products) {
     const searchTerm = searchBar.value.toLowerCase();
     const inStockOnly = inStockCheckbox.checked;
@@ -86,10 +81,8 @@ const displayData = async () => {
       const products = eval(arrayString);
       array = products;
 
-      // Affiche initialement tous les produits
       displayProducts(array);
 
-      // Ajout des Event Listeners après que les produits aient été chargés
       searchBar.addEventListener('input', () => filterProducts(array));
       inStockCheckbox.addEventListener('change', () => filterProducts(array));
 
@@ -98,5 +91,4 @@ const displayData = async () => {
     }
 };
 
-// Charge les données et initialise l'interface
 displayData();
